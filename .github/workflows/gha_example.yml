@@ -1,10 +1,10 @@
-name: Lecture 4 - GHAction example solution  
+name: GHAction example  
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-    - 'v*'
+#  push:
+#    tags:
+#    - 'v*'
 
 jobs:
   ci_step:
@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ vars.DOCKERHUB_USERNAME }}/lecture
+          images: ${{ vars.DOCKERHUB_USERNAME }}/example
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -51,8 +51,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           cache-from: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/lecture:cache 
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/example:cache 
           cache-to: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/lecture:cache  
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/example:cache  
           tags: ${{ steps.meta.outputs.tags }}
       
